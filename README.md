@@ -47,3 +47,32 @@ sudo ufw default deny incoming
 ufw config file:
 
 /etc/default/ufw
+
+## secure ssh
+https://www.linode.com/docs/security/securing-your-server/
+
+### 1. disable root login over ssh
+
+sudo vi /etc/ssh/sshd_config
+
+PermitRootLogin no
+
+### 2. disable shh password authentication
+
+sudo vi /etc/ssh/sshd_config
+
+PasswordAuthentication no
+
+### 3. listen on only one internet protocol
+
+-AddressFamily inet listen ipv4
+
+-AddressFamily inet6 listen ipv6
+
+-AddressFamily is not in sshd_config by default
+
+	echo 'AddressFamily inet' | sudo tee -a /etc/ssh/sshd_config
+
+### 4. restart ssh
+
+sudo systemctl restart sshd
